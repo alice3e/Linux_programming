@@ -1,0 +1,11 @@
+#!usr/bin/bash/
+wget https://funik.ru/wp-content/uploads/2018/10/4d048348eb067e7ca9f0.jpg
+mv 4d048348eb067e7ca9f0.jpg 1.jpg
+for i in {1..5}
+do
+    # запуск одного фонового процесса
+    convert 1.jpg $i.png &
+done
+# ожидание окончания работы
+wait
+echo 'Finished'

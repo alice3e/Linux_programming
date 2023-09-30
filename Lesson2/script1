@@ -1,0 +1,8 @@
+#!usr/bin/bash/
+
+wget https://funik.ru/wp-content/uploads/2018/10/4d048348eb067e7ca9f0.jpg
+mv 4d048348eb067e7ca9f0.jpg 2.jpg
+convert 2.jpg 2.png
+mimeopen -d 2.png
+echo 'DONE!'
+

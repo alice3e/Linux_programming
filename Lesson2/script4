@@ -1,0 +1,10 @@
+#!usr/bin/bash/
+
+find -name "*.jpg"  | while read line
+do
+	x=$(echo "$line" | cut -d'/' -f2 | cut -d'.' -f1)
+	convert $x.jpg $x.png &
+done
+
+wait
+echo "Finished"

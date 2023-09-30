@@ -1,0 +1,5 @@
+#!usr/bin/bash/
+find /sys -name "temp*input" | while read line
+do
+	cat $line
+done

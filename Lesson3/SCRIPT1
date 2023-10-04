@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Получаем MIME-тип файла с помощью команды 'file'
+file_mime=$(file --mime-type -b "$1")
+
+# Определяем, какую программу использовать на основе MIME-типа
+case "$file_mime" in
+    "image/png" | "image/jpeg" | "image/gif")
+        # Для изображений используем GIMP
+        org.gnome.eog "$1"
+        ;;
+    "application/pdf" | "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        # Для PDF и документов используем LibreOffice
+        libreoffice --writer "$1"
+        ;;
+    "video/mp4" | "video/quicktime")
+        # Для видео используем MPV
+        mpv "$1"
+        ;;
+    *)
+        # Если MIME-тип не соответствует известным типам, выводим сообщение об ошибке
+        echo "Неизвестный MIME-тип: $file_mime"
+        ;;
+esac
+

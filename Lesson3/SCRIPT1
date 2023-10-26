@@ -5,11 +5,11 @@ file_mime=$(file --mime-type -b "$1")
 
 # Определяем, какую программу использовать на основе MIME-типа
 case "$file_mime" in
-    "image/png" | "image/jpeg" | "image/gif")
+    "image/png" | "image/jpeg" | "image/gif" )
         # Для изображений используем GIMP
-        org.gnome.eog "$1"
+        gimp "$1"
         ;;
-    "application/pdf" | "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    "application/pdf" | "application/vnd.openxmlformats-officedocument.wordprocessingml.document" | "text/plain" | "application/octet-stream")
         # Для PDF и документов используем LibreOffice
         libreoffice --writer "$1"
         ;;

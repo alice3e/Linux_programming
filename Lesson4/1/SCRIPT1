@@ -1,0 +1,6 @@
+// env EDITOR=vim vidir
+V
+G
+gU
+:w
+:q

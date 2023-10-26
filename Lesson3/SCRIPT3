@@ -1,14 +1,17 @@
 #!/bin/bash
 
-# Функция для выполнения команды и перенаправления вывода и ошибок в файл
-my_func() {
-  local output_file="$1"
-  shift # Сдвигаем аргументы, чтобы получить команду
+my_function() {
+    # Первый аргумент - файл вывода
+    local output_file="$1"
+    shift
 
-  # Выполняем команду и перенаправляем вывод и ошибки в указанный файл
-  "$@" > "$output_file" 2>&1
+    # Остальные аргументы - команда
+    "$@" > "$output_file" 2>&1
 }
 
-# Пример вызова функции
-# output_filename="/tmp/my-output"
-# my_func "$output_filename" ls -l
+
+function_name="$1"
+shift
+
+"$function_name" "$@"
+

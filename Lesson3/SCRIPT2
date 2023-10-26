@@ -1,35 +1,53 @@
 #!/bin/bash
 
-# Переменные для хранения значений по умолчанию
+
+
+# Переменные по умолчанию
+
 longitude=""
+
 latitude=""
 
-# Обработка опций с использованием getopts
-while getopts ":x:y:" opt; do
+
+
+# Используем getopts
+
+while getopts "x:y:" opt; do
+
   case $opt in
+
     x)
+
       longitude="$OPTARG"
+
       ;;
+
     y)
+
       latitude="$OPTARG"
+
       ;;
+
     \?)
-      echo "Неверная опция: -$OPTARG" >&2
+
+      echo "Использование: $0 -x <долгота> -y <широта>"
+
       exit 1
+
       ;;
-    :)
-      echo "Опция -$OPTARG требует аргумента." >&2
-      exit 1
-      ;;
+
   esac
+
 done
 
-# Проверка, что были указаны и x, и y
-if [ -z "$longitude" ] || [ -z "$latitude" ]; then
-  echo "Необходимо указать как x, так и y."
-  exit 1
-fi
 
-# Запрос погоды с использованием curl и wttr.in
-curl "wttr.in/$latitude,$longitude"
-#./weather.sh -x <долгота> -y <широта>
+
+# Получение погоды с сайта wttr.in
+
+weather=$(curl -s "wttr.in/${longitude},${latitude}?format=%C+%t")
+
+
+
+# Выводим результат
+
+echo "Погода в точке (долгота: $longitude, широта: $latitude): $weather"

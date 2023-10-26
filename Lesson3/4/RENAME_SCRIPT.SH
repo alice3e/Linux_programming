@@ -1,0 +1,5 @@
+mv "Picture1 (another copy).JPG" "PICTURE1 (ANOTHER COPY).JPG"
+mv "Picture1 (copy).JPG" "PICTURE1 (COPY).JPG"
+mv "Picture1.JPG" "PICTURE1.JPG"
+mv "SCRIPT4" "SCRIPT4"
+mv "rename_script.sh" "RENAME_SCRIPT.SH"

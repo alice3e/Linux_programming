@@ -1,3 +1,5 @@
-1)gcc -o change_hostname main.cpp -pthread
-2)./change_hostname NewHostName
+1)g++ -o change_hostname main.cpp -pthread
+
+2)sudo ./change_hostname NewComputerName
+
 

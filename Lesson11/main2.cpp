@@ -1,0 +1,96 @@
+#include <iostream>
+#include <cstring>
+#include <sys/mman.h>
+#include <unistd.h>
+
+class ByteBuffer {
+public:
+    // Конструктор по умолчанию
+    ByteBuffer() : data(nullptr), size(0) {}
+
+    // Конструктор, инициализирующий буфер с указанным размером
+    explicit ByteBuffer(size_t size) : size(size) {
+        data = static_cast<uint8_t*>(mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0));
+
+        if (data == MAP_FAILED) {
+            perror("Failed to allocate memory using mmap");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    // Конструктор перемещения
+    ByteBuffer(ByteBuffer&& other) noexcept : data(other.data), size(other.size) {
+        // Не забываем обнулить данные у временного объекта
+        other.data = nullptr;
+        other.size = 0;
+    }
+
+    // Оператор перемещения
+    ByteBuffer& operator=(ByteBuffer&& other) noexcept {
+        if (this != &other) {
+            // Освобождаем текущие ресурсы
+            if (data != nullptr) {
+                if (munmap(data, size) == -1) {
+                    perror("Failed to deallocate memory using munmap");
+                    exit(EXIT_FAILURE);
+                }
+            }
+
+            // Перемещаем ресурсы
+            data = other.data;
+            size = other.size;
+
+            // Обнуляем данные у временного объекта
+            other.data = nullptr;
+            other.size = 0;
+        }
+
+        return *this;
+    }
+
+    // Деструктор
+    ~ByteBuffer() {
+        if (data != nullptr) {
+            if (munmap(data, size) == -1) {
+                perror("Failed to deallocate memory using munmap");
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+
+    // Метод для получения указателя на данные
+    uint8_t* getData() const {
+        return data;
+    }
+
+    // Метод для получения размера буфера
+    size_t getSize() const {
+        return size;
+    }
+
+private:
+    uint8_t* data;  // Указатель на данные
+    size_t size;    // Размер буфера
+};
+
+int main() {
+    // Пример использования
+    size_t bufferSize = 1024;  // Размер буфера, например, 1 килобайт
+
+    ByteBuffer buffer(bufferSize);
+
+    // Используйте buffer.getData() для доступа к данным
+    // Используйте buffer.getSize() для получения размера буфера
+
+    std::cout << "ByteBuffer created with size: " << buffer.getSize() << " bytes" << std::endl;
+
+    // Пример использования конструктора перемещения
+    ByteBuffer newBuffer = std::move(buffer);
+
+    // Пример использования оператора перемещения
+    ByteBuffer anotherBuffer;
+    anotherBuffer = std::move(newBuffer);
+
+    return 0;
+}
+

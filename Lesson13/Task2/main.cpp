@@ -1,28 +1,50 @@
 #include <iostream>
+#include <cmath>
 
 class Rectangle {
-public:
-    Rectangle(double length, double width) : length_(length), width_(width) {}
-
-    double getLength() const {
-        return length_;
-    }
-
-    double getWidth() const {
-        return width_;
-    }
-
 private:
-    double length_;
-    double width_;
+    struct Point {
+        double x, y;
+    };
+
+    Point topLeft;     // Левая верхняя точка (вершина) прямоугольника
+    Point bottomRight; // Правая нижняя точка (основание) прямоугольника
+
+public:
+    // Конструктор класса Rectangle
+    Rectangle(double x1, double y1, double x2, double y2) {
+        topLeft.x = x1;
+        topLeft.y = y1;
+        bottomRight.x = x2;
+        bottomRight.y = y2;
+    }
+
+    // Метод для вычисления площади прямоугольника
+    double getArea() const {
+        return std::abs((topLeft.x - bottomRight.x) * (topLeft.y - bottomRight.y));
+    }
+
+    // Метод для вывода координат и площади прямоугольника
+    void display() const {
+        std::cout << "Top Left: (" << topLeft.x << ", " << topLeft.y << ")\n";
+        std::cout << "Bottom Right: (" << bottomRight.x << ", " << bottomRight.y << ")\n";
+        std::cout << "Area: " << getArea() << "\n";
+    }
 };
 
 int main() {
-    Rectangle r1(5.0, 3.0);
-    Rectangle r2(4.0, 6.0);
+    // Создаем объекты прямоугольников
+    Rectangle rect1(0.0, 0.0, 4.0, 3.0);
+    Rectangle rect2(-1.0, -2.0, 3.0, 1.0);
 
-    std::cout << "Rectangle 1: Length = " << r1.getLength() << ", Width = " << r1.getWidth() << std::endl;
-    std::cout << "Rectangle 2: Length = " << r2.getLength() << ", Width = " << r2.getWidth() << std::endl;
+    // Выводим параметры прямоугольников
+    std::cout << "Rectangle 1:\n";
+    rect1.display();
+    std::cout << "\n";
+
+    std::cout << "Rectangle 2:\n";
+    rect2.display();
 
     return 0;
 }
+

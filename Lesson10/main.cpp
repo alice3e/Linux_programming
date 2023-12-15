@@ -89,7 +89,7 @@ public:
 int main() {
     File file("test.txt");
 
-    file.write("Hello, World!", 14);
+    file.write("Helloaa, World!", 14);
 
     char buffer[14];
     file.seek(0);

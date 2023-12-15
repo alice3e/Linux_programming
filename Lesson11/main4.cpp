@@ -6,7 +6,7 @@
 
 void check(int result, const char* message) {
     if (result == -1) {
-        std::cerr << message << ": " << strerror(errno) << std::endl;
+        
         exit(EXIT_FAILURE);
     }
 }

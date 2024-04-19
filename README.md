@@ -8,3 +8,5 @@ Learning linux in SPbU with Jasur
 > Tasks - https://courses.igankevich.com
 
 ![cat](https://media.tenor.com/bWUeVRqW9-IAAAAi/fast-cat-cat-excited.gif)
+
+---
